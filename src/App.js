@@ -1,25 +1,42 @@
-import logo from './logo.svg';
 import './App.css';
+import {useState, useEffect} from 'react';
+import { gsap } from "gsap";
+
 
 function App() {
+  
+  const [boring, setBoring] = useState('')
+
+  const fetchData = async()=>{
+  const response = await fetch (`http://www.boredapi.com/api/activity`);
+  const data = await response.json();
+  setBoring(data.activity);
+  };
+
+  useEffect(()=>{
+    fetchData()
+    gsap.to('.pictureTwo', {opacity:1, delay: 3, y:-20})
+  }, []);
+
+  
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+
+      <div className="container picture">
+    <h1>If you don't know what you want to do, press this button</h1>
+      </div>
+      <div className="container picture">
+      <button onClick={fetchData}>Click here</button>
+      </div>
+      <div className="container pictureTwo">
+      <h2>"{boring}"</h2>
+      </div>
+      
     </div>
+    
   );
+  
 }
 
 export default App;
