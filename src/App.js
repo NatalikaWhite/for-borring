@@ -1,10 +1,12 @@
 import './App.css';
-import {useState, useEffect} from 'react';
+import {useState, useEffect, useRef} from 'react';
 import { gsap } from "gsap";
 
 
 function App() {
   
+  const boxRef = useRef();
+
   const [boring, setBoring] = useState('')
 
   const fetchData = async()=>{
@@ -15,11 +17,10 @@ function App() {
 
   useEffect(()=>{
     fetchData()
-    gsap.to('.pictureTwo', {opacity:1, delay: 3, y:-20})
+    gsap.to(boxRef.current, {opacity:1, delay: 3, y:-20})
   }, []);
 
   
-
   return (
     <div className="App">
 
@@ -29,7 +30,7 @@ function App() {
       <div className="container picture">
       <button onClick={fetchData}>Click here</button>
       </div>
-      <div className="container pictureTwo">
+      <div className="container pictureTwo" ref={boxRef}>
       <h2>"{boring}"</h2>
       </div>
       
